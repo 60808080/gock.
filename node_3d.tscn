@@ -1,0 +1,153 @@
+[gd_scene load_steps=15 format=3 uid="uid://co8hcucy8w28x"]
+
+[ext_resource type="Script" uid="uid://xfpnwmdrcybb" path="res://Playe.gd" id="1_a202f"]
+[ext_resource type="PackedScene" uid="uid://bn5v5xi01tm88" path="res://placeholder.blend" id="2_noarx"]
+[ext_resource type="Script" uid="uid://b60jx2cjxqxd" path="res://ray_cast_3d.gd" id="3_a0tk4"]
+[ext_resource type="Texture2D" uid="uid://buk77fvxqyvqf" path="res://textures/CIRCLE.png" id="3_jka67"]
+[ext_resource type="Script" uid="uid://c4ht622xitrmk" path="res://area_3d.gd" id="4_r3fl7"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_noarx"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_a0tk4"]
+sky_material = SubResource("ProceduralSkyMaterial_noarx")
+
+[sub_resource type="Environment" id="Environment_r3fl7"]
+background_mode = 2
+sky = SubResource("Sky_a0tk4")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_a202f"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_jka67"]
+points = PackedVector3Array(-0.12520654, -0.532801, -0.4805069, 0.022783129, 0.4760704, 0.49888408, 0.16971254, 0.5591441, 0.46417162, 0.23105091, -0.8035912, 0.32045516, 0.40741014, 0.651043, -0.24352328, -0.4827893, 0.59484255, 0.082213186, -0.3628679, -0.68231165, 0.2896967, 0.46904355, -0.65452886, -0.06627126, -0.12744367, 0.8427015, -0.33810276, -0.39343542, -0.6839421, -0.24471663, 0.43825462, 0.62330925, 0.20084947, 0.0841477, 0.977454, 0.11479468, -0.06820232, -0.9764576, -0.12927033, 0.20054972, -0.56312895, -0.4514544, -0.18552664, 0.59545326, -0.4534751, -0.27336287, 0.59226835, 0.40775412, -0.0069364863, -0.47682306, 0.49966025, 0.37582088, -0.5886136, 0.31695515, 0.111579016, 0.5630594, -0.48117727, -0.41725034, 0.5278656, -0.27049688, -0.48454633, -0.59697217, -0.06650971, -0.27974695, 0.90856135, 0.05333608, -0.25019687, -0.8807117, 0.20531891, 0.263647, -0.90277094, -0.1273943, 0.29336792, 0.8715263, -0.15719566, 0.3734115, -0.5263189, -0.32824618, 0.4996626, 0.47664148, -0.0068885577, 0.053105574, 0.8750009, 0.32470253, -0.15454252, -0.5908538, 0.4658794, -0.09727988, -0.7823577, -0.39818847, -0.3876489, -0.49817133, 0.31564978, -0.30067965, -0.58799505, -0.38890144)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i5arm"]
+transparency = 1
+albedo_texture = ExtResource("3_jka67")
+emission_enabled = true
+emission_texture = ExtResource("3_jka67")
+
+[sub_resource type="GDScript" id="GDScript_a202f"]
+script/source = "extends Camera3D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	var pos = $\"../../Playe/body\".global_position
+	look_at_from_position ( Vector3(2.355,5.826,-5.067),Vector3(pos) ,Vector3(0,1,0))
+	pass
+"
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_jka67"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i5arm"]
+size = Vector3(1.7114258, 2.1643372, 3.063263)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WALL" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8397276, 4.2781615, 6.2841396)
+use_collision = true
+size = Vector3(11.413172, 8.781323, 0.99554443)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="WALL"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8860462, -3.8388948, -0.8387766)
+use_collision = true
+size = Vector3(12.861109, 0.6418638, 0.52596664)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="WALL"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.8109655, 2.1475492, -0.0012726784)
+use_collision = true
+size = Vector3(4.958905, 4.5200987, 0.99554443)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_r3fl7")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7914543, 0, 3.894287)
+use_collision = true
+size = Vector3(17.28291, 0.225, 17.788574)
+
+[node name="Playe" type="CharacterBody3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1.9651268, 0)
+axis_lock_angular_z = true
+script = ExtResource("1_a202f")
+
+[node name="placeholder" parent="Playe" instance=ExtResource("2_noarx")]
+transform = Transform3D(-1.3331974e-08, 0, 0.305, 0, 0.305, 0, -0.305, 0, -1.3331974e-08, 0, 0.6292629, 0.010434151)
+
+[node name="body" type="MeshInstance3D" parent="Playe"]
+transform = Transform3D(1.435, 0, 0, 0, 1.435, 0, 0, 0, 1.435, -0.01967907, -0.4245124, -9.608269e-05)
+visible = false
+mesh = SubResource("CapsuleMesh_a202f")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Playe"]
+transform = Transform3D(0.60974085, 0, 0, 0, 1.435, 0, 0, 0, 0.5025715, -0.01967907, -0.4245124, -9.608269e-05)
+shape = SubResource("ConvexPolygonShape3D_jka67")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Playe"]
+transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, -0.080709584, -1.8024427, 0.06840577)
+size = Vector3(4.0131836, 0.001, 3.0498047)
+material = SubResource("StandardMaterial3D_i5arm")
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2032366, -0.8054738, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Node3D"]
+transform = Transform3D(-0.75470966, 0.32802948, -0.5681637, 0, 0.8660254, 0.5, 0.65605897, 0.37735483, -0.6535977, 2.3549776, 5.826482, -5.0672607)
+projection = 1
+size = 7.262
+script = SubResource("GDScript_a202f")
+
+[node name="RayCast3D" type="RayCast3D" parent="Node3D"]
+transform = Transform3D(-0.1915784, 0.7014428, -0.6864953, -0.28364936, -0.7091738, -0.6454577, -0.9395961, 0.07106823, 0.33482614, 2.3549776, 5.826482, -5.0672607)
+target_position = Vector3(0, -1, -20)
+hit_from_inside = true
+debug_shape_custom_color = Color(1, 1, 1, 1)
+script = ExtResource("3_a0tk4")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(1.1340902, 0, 0, 0, 1.1340902, 0, 0, 0, 5.4439673, 3.8648841, 5.085132, 12.937971)
+size = Vector3(16.894867, 9.967773, 0.15237427)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.4123156, 0, 0, 0, 1.3270415, 0, 0, 0, 1.414484, 3.1102152, 1.7274308, 9.533651)
+mesh = SubResource("CapsuleMesh_jka67")
+
+[node name="Area3D" type="Area3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.041211843, 0.12484729, -0.006893158)
+script = ExtResource("4_r3fl7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.22572327, 0.0496974)
+shape = SubResource("BoxShape3D_i5arm")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 469.0
+offset_top = 257.0
+offset_right = 568.0
+offset_bottom = 371.0
+
+[node name="Panel" type="Panel" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 232.5
+offset_bottom = 215.0
